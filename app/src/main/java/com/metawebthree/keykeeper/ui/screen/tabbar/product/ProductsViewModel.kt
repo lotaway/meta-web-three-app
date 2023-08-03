@@ -10,6 +10,7 @@ import kotlinx.coroutines.launch
 import java.time.LocalDateTime
 
 sealed class ProductIntent() {
+    data class ToggleHoursSystem(val to24: Boolean? = null) : ProductIntent()
     data class ToggleLoadingView(val loading: Boolean?) : ProductIntent()
 }
 
@@ -95,6 +96,12 @@ class ProductsViewModel : ViewModel() {
 
     fun sendIntent(intent: ProductIntent) {
         when (intent) {
+            is ProductIntent.ToggleHoursSystem -> {
+                _uiState.run {
+                    value = value.copy(is24hours = intent.to24 ?: !value.is24hours)
+                }
+            }
+
             is ProductIntent.ToggleLoadingView -> {
                 _uiState.apply {
                     value = value.copy(loading = intent.loading ?: !value.loading)
@@ -102,7 +109,7 @@ class ProductsViewModel : ViewModel() {
             }
 
             else -> {
-                throw RuntimeException("Unknown Product Intent${intent}")
+                throw RuntimeException("Unknown Produ ct Intent${intent}")
             }
         }
     }

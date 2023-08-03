@@ -2,7 +2,6 @@ package com.metawebthree.keykeeper.ui.screen.tabbar.product
 
 import android.app.Activity
 import android.content.pm.ActivityInfo
-import androidx.annotation.NonNull
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement
 import androidx.compose.foundation.layout.Box
@@ -17,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
@@ -31,21 +29,20 @@ import androidx.lifecycle.viewmodel.compose.viewModel
 import com.metawebthree.keykeeper.ui.components.LoadingProcess
 import com.metawebthree.keykeeper.ui.components.MeridiemButton
 import com.metawebthree.keykeeper.ui.components.TimeShower
+import com.metawebthree.keykeeper.ui.components.TimeShowerOptions
 import com.metawebthree.keykeeper.ui.screen.tabbar.TabBarIntent
 import com.metawebthree.keykeeper.ui.screen.tabbar.TabBarModel
 import kotlinx.coroutines.delay
 
 @Composable
 fun ProductsView(tabBarModel: TabBarModel = hiltViewModel()) {
-    val activity: Activity = LocalContext.current as Activity
+    val activity = LocalContext.current as Activity
     val isLandscape = tabBarModel.isLandscape.collectAsStateWithLifecycle()
     val productsViewModel: ProductsViewModel = viewModel()
     val dateState by productsViewModel.dateState.collectAsStateWithLifecycle()
     val timeState by productsViewModel.timeState.collectAsStateWithLifecycle()
     val uiState by productsViewModel.uiState.collectAsStateWithLifecycle()
-    val defaultOrientation = remember {
-        activity.requestedOrientation
-    }
+//    val defaultOrientation = remember { activity.requestedOrientation }
     LaunchedEffect(isLandscape.value) {
         productsViewModel.sendIntent(ProductIntent.ToggleLoadingView(true))
         delay(300)
@@ -53,8 +50,7 @@ fun ProductsView(tabBarModel: TabBarModel = hiltViewModel()) {
             if (activity.requestedOrientation == ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED)
                 activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE
         } else
-            activity.requestedOrientation = defaultOrientation
-//            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
+            activity.requestedOrientation = ActivityInfo.SCREEN_ORIENTATION_UNSPECIFIED
         productsViewModel.sendIntent(ProductIntent.ToggleLoadingView(false))
     }
     Box(modifier = Modifier.background(MaterialTheme.colorScheme.background)) {
@@ -69,7 +65,7 @@ fun ProductsView(tabBarModel: TabBarModel = hiltViewModel()) {
                 horizontalArrangement = Arrangement.SpaceBetween
             ) {
                 Text(text = "Products", fontSize = 18.sp)
-                MeridiemButton(activeMeridiemType = uiState.meridiemType)
+                MeridiemButton(activeMeridiemType = if (timeState.hour >= 12) MeridiemType.PM else MeridiemType.AM)
                 Switch(checked = isLandscape.value, onCheckedChange = {
                     tabBarModel.sendIntent(TabBarIntent.ToggleLandscape(it))
                 })
@@ -86,9 +82,17 @@ fun ProductsView(tabBarModel: TabBarModel = hiltViewModel()) {
                     modifier = Modifier.padding(bottom = 15.dp)
                 )
                 TimeShower(
-                    hour = timeState.getMeridiemHourStr(),
+                    hour = if (uiState.is24hours) timeState.get24HoursStr() else timeState.getMeridiemHourStr(),
                     minute = timeState.getMinuteStr(),
-                    second = timeState.getSecondStr()
+                    second = timeState.getSecondStr(),
+                    options = object: TimeShowerOptions {
+                        override fun onClick(index: Int): Unit {
+                            when (index) {
+                                0 -> productsViewModel.sendIntent(ProductIntent.ToggleHoursSystem())
+                                else -> {}
+                            }
+                        }
+                    }
                 )
             }
             if (uiState.loading)

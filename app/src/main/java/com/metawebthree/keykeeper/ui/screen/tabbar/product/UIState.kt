@@ -3,6 +3,7 @@ package com.metawebthree.keykeeper.ui.screen.tabbar.product
 data class UIState(
     var loading: Boolean = false,
     var meridiemType: MeridiemType = MeridiemType.AM,
+    var is24hours: Boolean = true,
 ) {
 
 }
@@ -18,13 +19,14 @@ data class DateState(var date: String = "", var week: String = "") {
 }
 
 data class TimeState(var hour: Int = 0, var minute: Int = 0, var second: Int = 0) {
-    fun getHourStr(): String {
+    fun get24HoursStr(): String {
         return if (hour < 10) "0$hour" else hour.toString()
     }
 
     fun getMeridiemHourStr(): String {
-        val h = (if (hour > 12) hour % 12 else hour)
-        return if (h < 10) "0$h" else h.toString()
+        return (hour % 12).let {
+            if (it < 10) "0$it" else it.toString()
+        }
     }
 
     fun getMinuteStr(): String {
