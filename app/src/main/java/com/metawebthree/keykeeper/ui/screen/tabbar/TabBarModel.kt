@@ -26,8 +26,8 @@ sealed class TabBarIntent {
 
 @HiltViewModel
 class TabBarModel @Inject constructor(private val dataStore: DataStore<Preferences>) : ViewModel() {
-    private var _isVisible = MutableStateFlow(true)
-    val isVisible = _isVisible.asStateFlow()
+    var isVisible = MutableStateFlow(true)
+        private set
     private var _isResponseScreenOrientation = MutableStateFlow(DataStoreConstants.RESPONSIVE_DEFAULT)
     val isResponseScreenOrientation = _isResponseScreenOrientation.asStateFlow()
     private var _isLandscape = MutableStateFlow(false)
@@ -71,9 +71,9 @@ class TabBarModel @Inject constructor(private val dataStore: DataStore<Preferenc
             is TabBarIntent.ToggleLandscape -> _isLandscape.run {
                 value = intent.landscape ?: !_isLandscape.value
             }
-            TabBarIntent.Show -> _isVisible.value = true
-            TabBarIntent.Hide -> _isVisible.value = false
-            TabBarIntent.Toggle -> _isVisible.value = !_isVisible.value
+            TabBarIntent.Show -> isVisible.value = true
+            TabBarIntent.Hide -> isVisible.value = false
+            TabBarIntent.Toggle -> isVisible.value = !isVisible.value
         }
     }
 }

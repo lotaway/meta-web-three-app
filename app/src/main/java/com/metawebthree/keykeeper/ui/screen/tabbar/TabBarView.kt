@@ -83,7 +83,7 @@ fun TabBarView(
     context: Context
 ) {
     val screenOrientationState by rememberUpdatedState(LocalConfiguration.current.orientation)
-    val tabBarModel: TabBarModel = hiltViewModel()
+    val tabBarModel = hiltViewModel<TabBarModel>()
     val isResponseScreenOrientationState =
         tabBarModel.isResponseScreenOrientation.collectAsStateWithLifecycle()
     val isTabBarVisible by tabBarModel.isVisible.collectAsStateWithLifecycle()

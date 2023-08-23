@@ -86,7 +86,14 @@ class MainActivity : ComponentActivity() {
             smsResultLauncher.launch(Manifest.permission.RECEIVE_SMS)
         }
         if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ActivityCompat.requestPermissions(this, arrayOf(Manifest.permission.POST_NOTIFICATIONS), 0)
+            ActivityCompat.requestPermissions(
+                this,
+                arrayOf(
+                    Manifest.permission.POST_NOTIFICATIONS,
+                    Manifest.permission.READ_MEDIA_IMAGES
+                ),
+                0
+            )
             NotificationChannel(
                 "background_channel",
                 "Background sync notifications",

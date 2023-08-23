@@ -16,7 +16,6 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
-import androidx.compose.runtime.remember
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
@@ -38,7 +37,7 @@ import kotlinx.coroutines.delay
 fun ProductsView(tabBarModel: TabBarModel = hiltViewModel()) {
     val activity = LocalContext.current as Activity
     val isLandscape = tabBarModel.isLandscape.collectAsStateWithLifecycle()
-    val productsViewModel: ProductsViewModel = viewModel()
+    val productsViewModel = viewModel<ProductsViewModel>()
     val dateState by productsViewModel.dateState.collectAsStateWithLifecycle()
     val timeState by productsViewModel.timeState.collectAsStateWithLifecycle()
     val uiState by productsViewModel.uiState.collectAsStateWithLifecycle()
