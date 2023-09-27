@@ -5,12 +5,10 @@ import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ComponentName
 import android.content.Context
-import android.content.Intent
-import android.content.IntentFilter
 import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
-import android.util.Log
+import android.view.KeyEvent
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,6 +19,8 @@ import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.metawebthree.keykeeper.broadcast.AirPlaneModeReceiver
+import com.metawebthree.keykeeper.broadcast.MediaButtonReceiver
+import com.metawebthree.keykeeper.broadcast.WatcherForActivity
 import com.metawebthree.keykeeper.broadcast.SmsReceiver
 import com.metawebthree.keykeeper.config.ApplicationRoute
 import com.metawebthree.keykeeper.ui.screen.SettingPage
@@ -48,6 +48,11 @@ class MainActivity : ComponentActivity() {
             }
         }
     private val airPlaneModeReceiver = AirPlaneModeReceiver()
+    private val mediaButtonReceiver = MediaButtonReceiver()
+
+    private fun getWatchers(): Array<WatcherForActivity> {
+        return arrayOf(airPlaneModeReceiver, mediaButtonReceiver)
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -73,11 +78,13 @@ class MainActivity : ComponentActivity() {
                 }
             }
         }
+        getWatchers().forEach {
+            it.onCreate(this)
+        }
         registry()
     }
 
     private fun registry() {
-        registerReceiver(airPlaneModeReceiver, IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED))
         if (PackageManager.PERMISSION_GRANTED != ContextCompat.checkSelfPermission(
                 this,
                 Manifest.permission.RECEIVE_SMS
@@ -106,14 +113,42 @@ class MainActivity : ComponentActivity() {
         }
     }
 
+    override fun onKeyDown(keyCode: Int, event: KeyEvent?): Boolean {
+        if (KeyEvent.KEYCODE_HEADSETHOOK == keyCode) {
+            when (event?.repeatCount) {
+                //  短按
+                0 -> Toast.makeText(this, "多媒体按键：短按", Toast.LENGTH_SHORT)
+                //  长按
+                else -> Toast.makeText(this, "多媒体按键：长按", Toast.LENGTH_SHORT)
+            }.show()
+        }
+        return super.onKeyDown(keyCode, event)
+    }
+
+    override fun onResume() {
+        getWatchers().forEach {
+            it.onResume(this)
+        }
+        return super.onResume()
+    }
+
+    override fun onPause() {
+        getWatchers().forEach {
+            it.onPause(this)
+        }
+        return super.onPause()
+    }
+
     override fun onDestroy() {
         super.onDestroy()
-        unregisterReceiver(airPlaneModeReceiver)
+        getWatchers().forEach {
+            it.onDestroy(this)
+        }
         //创建组件对象
-        val receiver = ComponentName(this, SmsReceiver::class.java)
+        val smsReceiver = ComponentName(this, SmsReceiver::class.java)
         // 获取包管理器对象禁用一个静态注册的广播接收者
         packageManager.setComponentEnabledSetting(
-            receiver,
+            smsReceiver,
             PackageManager.COMPONENT_ENABLED_STATE_DISABLED,
             PackageManager.DONT_KILL_APP
         )

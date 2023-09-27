@@ -3,12 +3,29 @@ package com.metawebthree.keykeeper.broadcast
 import android.content.BroadcastReceiver
 import android.content.Context
 import android.content.Intent
+import android.content.IntentFilter
 import android.os.IBinder
 import android.provider.Settings
 
-class AirPlaneModeReceiver : BroadcastReceiver() {
+class AirPlaneModeReceiver : BroadcastReceiver(),
+    WatcherForActivity {
 
     var isTurnedOn: Boolean = false
+    override fun onCreate(context: Context) {
+
+    }
+
+    override fun onResume(context: Context) {
+        context.registerReceiver(this, IntentFilter(Intent.ACTION_AIRPLANE_MODE_CHANGED))
+    }
+
+    override fun peekService(myContext: Context?, service: Intent?): IBinder {
+        return super.peekService(myContext, service)
+    }
+
+    override fun onPause(context: Context) {
+        context.unregisterReceiver(this)
+    }
 
     override fun onReceive(context: Context?, intent: Intent?) {
         if (intent?.action == Intent.ACTION_AIRPLANE_MODE_CHANGED) {
@@ -19,8 +36,8 @@ class AirPlaneModeReceiver : BroadcastReceiver() {
         }
     }
 
-    override fun peekService(myContext: Context?, service: Intent?): IBinder {
-        return super.peekService(myContext, service)
+    override fun onDestroy(context: Context?) {
+
     }
 
 }

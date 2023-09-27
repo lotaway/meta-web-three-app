@@ -82,6 +82,7 @@ dependencies {
     implementation("androidx.navigation:navigation-compose:$navVersion")
     implementation("androidx.navigation:navigation-dynamic-features-fragment:$navVersion")
     implementation("com.amap.api:map2d:latest.integration")
+    implementation("androidx.media:media:1.4.1")
     // 插件升级后出现kotlin-stdlib-jdk版本冲突在这里解决
 //    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk7:1.8.20")
 //    implementation("org.jetbrains.kotlin:kotlin-stdlib-jdk8:1.8.20")

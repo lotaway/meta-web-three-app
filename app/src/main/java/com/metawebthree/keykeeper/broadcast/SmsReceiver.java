@@ -16,7 +16,10 @@ import java.util.Locale;
 public class SmsReceiver extends BroadcastReceiver {
     @Override
     public void onReceive(Context context, Intent intent) {
-        if (!intent.getAction().equals("android.provider.Telephony.SMS_RECEIVED"))
+        String intentAction = intent.getAction();
+        if (intentAction == null)
+            return;
+        if (!intentAction.equals("android.provider.Telephony.SMS_RECEIVED"))
             return;
         //获取发送短信意图对象携带的数据
         Bundle bundle = intent.getExtras();
