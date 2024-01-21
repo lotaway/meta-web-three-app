@@ -42,7 +42,7 @@ fun GoodsList(gList: List<IGoods>, showType: Boolean) {
             itemsIndexed(gList) { index, goods ->
                 Text(
                     text = goods.name,
-                    modifier = goodsDetailModifier
+                    modifier = goodsDetailModifier,
                 )
             }
         }
