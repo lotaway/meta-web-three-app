@@ -2,7 +2,7 @@
 plugins {
     alias(libs.plugins.androidApplication) apply false
     alias(libs.plugins.androidLibrary) apply false
-//    kotlin("android") version "1.8.10" apply false
+    kotlin("android") version "2.0.20-Beta1" apply false
     alias(libs.plugins.kotlinAndroid) apply false
     alias(libs.plugins.daggerHiltAndroid) apply false
 }
