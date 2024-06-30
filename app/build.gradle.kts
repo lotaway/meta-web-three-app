@@ -1,4 +1,5 @@
 plugins {
+//    kotlin("jvm")  version "2.1"
     alias(libs.plugins.androidApplication)
 //    kotlin("android")
     alias(libs.plugins.kotlinAndroid)
@@ -8,11 +9,11 @@ plugins {
 
 android {
     namespace = "com.metawebthree.keykeeper"
-    compileSdk = 33
+    compileSdk = 34
     defaultConfig {
         applicationId = "com.metawebthree.keykeeper"
         minSdk = 27
-        targetSdk = 33
+        targetSdk = 34
         versionCode = 1
         versionName = "1.0"
 
@@ -107,10 +108,4 @@ dependencies {
 
     debugImplementation("androidx.compose.ui:ui-tooling-preview:$composeUiVersion")
     debugImplementation("androidx.compose.ui:ui-test-manifest:$composeUiVersion")
-}
-
-tasks.withType(org.jetbrains.kotlin.gradle.tasks.KotlinCompile::class) {
-    kotlinOptions {
-        jvmTarget = "1.8"
-    }
 }

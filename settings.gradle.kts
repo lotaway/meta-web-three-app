@@ -14,7 +14,7 @@ dependencyResolutionManagement {
     versionCatalogs {
         create("libs") {
             version("android", "8.0.0")
-            version("kotlin", "1.8.10")
+            version("kotlin", "2.0.20-Beta1")
             version("dagger-hilt", "2.44")
             version("lifecycle", "2.6.0-rc01")
             plugin(
