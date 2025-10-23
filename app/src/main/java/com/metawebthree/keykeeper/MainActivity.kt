@@ -28,6 +28,8 @@ import com.metawebthree.keykeeper.ui.screen.StartPage
 import com.metawebthree.keykeeper.ui.screen.tabbar.TabBarView
 import com.metawebthree.keykeeper.ui.theme.DefaultTheme
 import dagger.hilt.android.AndroidEntryPoint
+import android.graphics.Color
+import android.view.Window
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -82,6 +84,11 @@ class MainActivity : ComponentActivity() {
             it.onCreate(this)
         }
         registry()
+        fixHuaweiUI()
+    }
+
+    private fun fixHuaweiUI() {
+
     }
 
     private fun registry() {

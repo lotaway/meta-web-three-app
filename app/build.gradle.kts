@@ -46,7 +46,7 @@ android {
     composeOptions {
         kotlinCompilerExtensionVersion = "1.4.3"
     }
-    buildToolsVersion = "33.0.0"
+    buildToolsVersion = "35.0.0"
     packaging {
         resources {
             excludes += "/META-INF/{AL2.0,LGPL2.1}"

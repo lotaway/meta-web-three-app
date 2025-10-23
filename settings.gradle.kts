@@ -1,5 +1,12 @@
 pluginManagement {
     repositories {
+        maven { url=uri ("https://jitpack.io") }
+        maven { url=uri ("https://maven.aliyun.com/repository/releases") }
+//        maven { url 'https://maven.aliyun.com/repository/jcenter' }
+        maven { url=uri ("https://maven.aliyun.com/repository/google") }
+        maven { url=uri ("https://maven.aliyun.com/repository/central") }
+        maven { url=uri ("https://maven.aliyun.com/repository/gradle-plugin") }
+        maven { url=uri ("https://maven.aliyun.com/repository/public") }
         google()
         mavenCentral()
         gradlePluginPortal()
@@ -13,10 +20,11 @@ dependencyResolutionManagement {
     }
     versionCatalogs {
         create("libs") {
-            version("android", "8.0.0")
-            version("kotlin", "2.0.20-Beta1")
+            version("android", "8.13.0")
+            version("kotlin", "2.1.20")
             version("dagger-hilt", "2.44")
             version("lifecycle", "2.6.0-rc01")
+//            library("android-gradle-plugin", "com.android.tools.build", "gradle").versionRef("agp")
             plugin(
                 "androidApplication",
                 "com.android.application"
