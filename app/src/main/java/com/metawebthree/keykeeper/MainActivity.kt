@@ -1,6 +1,7 @@
 package com.metawebthree.keykeeper
 
 import android.Manifest
+import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ComponentName
@@ -28,8 +29,7 @@ import com.metawebthree.keykeeper.ui.screen.StartPage
 import com.metawebthree.keykeeper.ui.screen.tabbar.TabBarView
 import com.metawebthree.keykeeper.ui.theme.DefaultTheme
 import dagger.hilt.android.AndroidEntryPoint
-import android.graphics.Color
-import android.view.Window
+import androidx.core.graphics.toColorInt
 
 @AndroidEntryPoint
 class MainActivity : ComponentActivity() {
@@ -88,7 +88,7 @@ class MainActivity : ComponentActivity() {
     }
 
     private fun fixHuaweiUI() {
-
+        (this as Activity).window.navigationBarColor = "#0b1729".toColorInt()
     }
 
     private fun registry() {
