@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.model
+package com.metawebthree.app.model
 
 import androidx.datastore.preferences.core.booleanPreferencesKey
 

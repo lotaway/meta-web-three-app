@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.screen
+package com.metawebthree.app.ui.screen
 
 import android.content.Context
 import android.content.Intent
@@ -11,7 +11,7 @@ import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.saveable.rememberSaveable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.tooling.preview.Preview
-import com.metawebthree.keykeeper.service.SyncService
+import com.metawebthree.app.service.SyncService
 
 @Composable
 fun SettingPage(context: Context?) {

@@ -6,24 +6,18 @@ import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.result.contract.ActivityResultContracts
 
-class AndroidSMSResultLauncher {
+class AndroidSMSResultLauncher: SMSLauncherBuilder {
 
-    private var activity: ComponentActivity?
-        get() {
-            if (activity == null) {
-                throw RuntimeException("activity not init!")
-            }
-            return activity
-        }
-        set(value) {
-            activity = value
-        }
+    private var activity: ComponentActivity? = null
 
     fun init(activity: ComponentActivity) {
         this.activity = activity
     }
 
-    fun build(): SMSLauncher {
+    override fun build(): SMSLauncher {
+        if (activity == null) {
+            throw RuntimeException("Activity must be init!")
+        }
         val result = activity?.registerForActivityResult(ActivityResultContracts.RequestPermission().also {
             it.createIntent(activity as Context, Manifest.permission.RECEIVE_SMS)
         }) {

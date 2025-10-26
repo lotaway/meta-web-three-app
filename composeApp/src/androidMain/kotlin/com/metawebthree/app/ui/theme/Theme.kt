@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.theme
+package com.metawebthree.app.ui.theme
 
 import android.app.Activity
 import android.os.Build

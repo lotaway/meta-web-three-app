@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.screen.tabbar
+package com.metawebthree.app.ui.screen.tabbar
 
 import android.content.ActivityNotFoundException
 import android.content.Context
@@ -41,9 +41,9 @@ import coil.size.Scale
 import com.google.accompanist.pager.ExperimentalPagerApi
 import com.google.accompanist.pager.HorizontalPager
 import com.google.accompanist.pager.rememberPagerState
-import com.metawebthree.keykeeper.BrowserActivity
-import com.metawebthree.keykeeper.ui.components.GoodsList
-import com.metawebthree.keykeeper.ui.components.IGoods
+import com.metawebthree.app.BrowserActivity
+import com.metawebthree.app.ui.components.GoodsList
+import com.metawebthree.app.ui.components.IGoods
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 import metawebthreeapp.composeapp.generated.resources.Res

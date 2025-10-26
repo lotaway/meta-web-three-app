@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper
+package com.metawebthree.app
 
 import android.os.Bundle
 import android.os.PersistableBundle
@@ -6,7 +6,7 @@ import android.util.Log
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.compose.material3.Text
-import com.metawebthree.keykeeper.ui.theme.DefaultTheme
+import com.metawebthree.app.ui.theme.DefaultTheme
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.delay
@@ -87,7 +87,7 @@ class BrowserActivity : ComponentActivity() {
         Log.d(index.toString(), value.toString())
     }*/
 
-    //  todo 加在动画
+    //  todo 加载动画
     private suspend fun loadAnimation(next: suspend () -> Unit) {
         delay(delayTime)
         next()

@@ -1,7 +1,6 @@
 package com.metawebthree.app
 
 import android.Manifest
-import android.app.Activity
 import android.app.NotificationChannel
 import android.app.NotificationManager
 import android.content.ComponentName
@@ -10,6 +9,7 @@ import android.content.pm.PackageManager
 import android.os.Build
 import android.os.Bundle
 import android.view.KeyEvent
+import android.view.WindowInsetsController
 import android.widget.Toast
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -26,20 +26,20 @@ import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
 import com.metawebthree.app.broadcast.SmsReceiver
 import com.metawebthree.app.broadcast.WatcherForActivity
-import com.metawebthree.keykeeper.broadcast.AirPlaneModeReceiver
-import com.metawebthree.keykeeper.broadcast.MediaButtonReceiver
-import com.metawebthree.keykeeper.config.ApplicationRoute
-import com.metawebthree.keykeeper.ui.screen.SettingPage
-import com.metawebthree.keykeeper.ui.screen.StartPage
-import com.metawebthree.keykeeper.ui.screen.tabbar.TabBarView
-import com.metawebthree.keykeeper.ui.theme.DefaultTheme
+import com.metawebthree.app.broadcast.AirPlaneModeReceiver
+import com.metawebthree.app.broadcast.MediaButtonReceiver
+import com.metawebthree.app.config.ApplicationRoute
+import com.metawebthree.app.ui.screen.SettingPage
+import com.metawebthree.app.ui.screen.StartPage
+import com.metawebthree.app.ui.screen.tabbar.TabBarView
+import com.metawebthree.app.ui.theme.DefaultTheme
 
 class MainActivity : ComponentActivity() {
 
-    private val smsResultLauncher = AndroidSMSResultLauncher()
+    private var smsResultLauncherBuilder: SMSLauncherBuilder? = null
 
-    private val airPlaneModeReceiver = AirPlaneModeReceiver()
-    private val mediaButtonReceiver = MediaButtonReceiver()
+    private var airPlaneModeReceiver: WatcherForActivity? = null
+    private var mediaButtonReceiver: WatcherForActivity? = null
 
     override fun onCreate(savedInstanceState: Bundle?) {
         enableEdgeToEdge()
@@ -55,35 +55,68 @@ class MainActivity : ComponentActivity() {
                     composable(ApplicationRoute.START_PAGE) {
                         StartPage(navController = appNavController)
                     }
-                    composable(ApplicationRoute.HOME_PAGE) {
-                        TabBarView(
-                            appNavController = appNavController,
-                            context = applicationContext
-                        )
-                    }
-                    composable(ApplicationRoute.SETTING_PAGE) {
-                        SettingPage(context = applicationContext)
-                    }
+//                    composable(ApplicationRoute.HOME_PAGE) {
+//                        TabBarView(
+//                            appNavController = appNavController,
+//                            context = applicationContext
+//                        )
+//                    }
+//                    composable(ApplicationRoute.SETTING_PAGE) {
+//                        SettingPage(context = applicationContext)
+//                    }
                 }
-                App()
             }
+//            App()
         }
-        getWatchers().forEach {
-            it.onCreate(this)
-        }
-        registry()
-        fixHuaweiUI()
+//        getWatchers().forEach {
+//            it.onCreate(this)
+//        }
+//        registry()
+//        fixUI()
     }
 
     private fun getWatchers(): Array<WatcherForActivity> {
-        return arrayOf(airPlaneModeReceiver, mediaButtonReceiver)
+        if (airPlaneModeReceiver == null) {
+            airPlaneModeReceiver = AirPlaneModeReceiver()
+        }
+        if (mediaButtonReceiver == null) {
+            mediaButtonReceiver = MediaButtonReceiver()
+        }
+        return arrayOf(
+            airPlaneModeReceiver as WatcherForActivity,
+            mediaButtonReceiver as WatcherForActivity
+        )
+    }
+
+    private fun fixUI() {
+        when {
+            Build.MANUFACTURER.contains("huawei", ignoreCase = true) -> fixHuaweiUI()
+
+            else -> {
+                // do nothing
+            }
+        }
     }
 
     private fun fixHuaweiUI() {
-//        this.window.navigationBarColor = getColor(R.color.bg_color)
-        this.window.navigationBarColor = "#0b1729".toColorInt()
-//        val color = MaterialTheme.colorScheme.background
-//        WindowCompat.getInsetsController(this.window, this.window.decorView).isAppearanceLightStatusBars =true
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.BAKLAVA -> {
+//                WindowCompat.getInsetsController(
+//                    this.window,
+//                    this.window.decorView
+//                ).isAppearanceLightStatusBars = true
+                this.window.insetsController?.setSystemBarsAppearance(
+                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS,
+                    WindowInsetsController.APPEARANCE_LIGHT_NAVIGATION_BARS
+                )
+            }
+
+            else -> {
+//                val color = MaterialTheme.colorScheme.background
+                this.window.navigationBarColor = "#0b1729".toColorInt()
+//                      this.window.navigationBarColor = getColor(R.color.bg_color)
+            }
+        }
     }
 
     private fun registry() {
@@ -92,27 +125,37 @@ class MainActivity : ComponentActivity() {
                 Manifest.permission.RECEIVE_SMS
             )
         ) {
-            smsResultLauncher.init(this)
-            val smsResultLauncher = smsResultLauncher.build()
-            smsResultLauncher.launch(Manifest.permission.RECEIVE_SMS)
-        }
-        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU) {
-            ActivityCompat.requestPermissions(
-                this,
-                arrayOf(
-                    Manifest.permission.POST_NOTIFICATIONS,
-                    Manifest.permission.READ_MEDIA_IMAGES
-                ),
-                0
-            )
-            NotificationChannel(
-                "background_channel",
-                "Background sync notifications",
-                NotificationManager.IMPORTANCE_HIGH
-            ).let { channel ->
-                (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
-                    createNotificationChannel(channel)
+            if (smsResultLauncherBuilder == null) {
+                smsResultLauncherBuilder = AndroidSMSResultLauncher().apply {
+                    init(this@MainActivity)
                 }
+            }
+            val smsResultLauncher = smsResultLauncherBuilder?.build()
+            smsResultLauncher?.launch(Manifest.permission.RECEIVE_SMS)
+        }
+        when {
+            Build.VERSION.SDK_INT >= Build.VERSION_CODES.TIRAMISU -> {
+                ActivityCompat.requestPermissions(
+                    this,
+                    arrayOf(
+                        Manifest.permission.POST_NOTIFICATIONS,
+                        Manifest.permission.READ_MEDIA_IMAGES
+                    ),
+                    0
+                )
+                NotificationChannel(
+                    "background_channel",
+                    "Background sync notifications",
+                    NotificationManager.IMPORTANCE_HIGH
+                ).let { channel ->
+                    (getSystemService(Context.NOTIFICATION_SERVICE) as NotificationManager).apply {
+                        createNotificationChannel(channel)
+                    }
+                }
+            }
+
+            else -> {
+                // do nothing
             }
         }
     }
@@ -121,27 +164,27 @@ class MainActivity : ComponentActivity() {
         if (KeyEvent.KEYCODE_HEADSETHOOK == keyCode) {
             when (event?.repeatCount) {
                 //  短按
-                0 -> Toast.makeText(this, "多媒体按键：短按", Toast.LENGTH_SHORT)
+                0 -> Toast.makeText(this, "This is not video detail page", Toast.LENGTH_SHORT)
                 //  长按
-                else -> Toast.makeText(this, "多媒体按键：长按", Toast.LENGTH_SHORT)
+                else -> Toast.makeText(this, "Please use back button to quit", Toast.LENGTH_SHORT)
             }.show()
         }
         return super.onKeyDown(keyCode, event)
     }
 
-    override fun onResume() {
-        getWatchers().forEach {
-            it.onResume(this)
-        }
-        return super.onResume()
-    }
+//    override fun onResume() {
+//        getWatchers().forEach {
+//            it.onResume(this)
+//        }
+//        return super.onResume()
+//    }
 
-    override fun onPause() {
-        getWatchers().forEach {
-            it.onPause(this)
-        }
-        return super.onPause()
-    }
+//    override fun onPause() {
+//        getWatchers().forEach {
+//            it.onPause(this)
+//        }
+//        return super.onPause()
+//    }
 
     override fun onDestroy() {
         super.onDestroy()

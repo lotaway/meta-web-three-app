@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.provider
+package com.metawebthree.app.provider
 
 import android.content.ContentProvider
 import android.content.ContentUris
@@ -22,8 +22,8 @@ class ErpMemberProvider : ContentProvider() {
      */
     @JvmField
     val matcher = UriMatcher(UriMatcher.NO_MATCH).apply {
-        addURI("com.metawebthree.keykeeper.provider.ErpMemberProvider","/erp", CODE_MEMBER)
-        addURI("com.metawebthree.keykeeper.provider.ErpMemberProvider","/erp/#", CODE_MEMBER_ID)
+        addURI("com.metawebthree.app.provider.ErpMemberProvider","/erp", CODE_MEMBER)
+        addURI("com.metawebthree.app.provider.ErpMemberProvider","/erp/#", CODE_MEMBER_ID)
     }
 
     override fun onCreate(): Boolean {

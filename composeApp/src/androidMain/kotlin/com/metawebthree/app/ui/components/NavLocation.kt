@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.components
+package com.metawebthree.app.ui.components
 
 import android.content.Context
 import android.widget.LinearLayout

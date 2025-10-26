@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.components
+package com.metawebthree.app.ui.components
 
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Arrangement

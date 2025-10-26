@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.service
+package com.metawebthree.app.service
 
 import android.app.Service
 import android.content.Intent

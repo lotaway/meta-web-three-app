@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.broadcast
+package com.metawebthree.app.broadcast
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -9,7 +9,6 @@ import android.media.AudioManager
 import android.os.Build
 import android.view.KeyEvent
 import androidx.annotation.RequiresApi
-import com.metawebthree.app.broadcast.WatcherForActivity
 import java.lang.StringBuilder
 
 class MediaButtonReceiver : BroadcastReceiver(),

@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.screen.tabbar.product
+package com.metawebthree.app.ui.screen.tabbar.product
 
 import android.annotation.SuppressLint
 import android.app.Activity
@@ -26,12 +26,12 @@ import androidx.compose.ui.unit.sp
 import androidx.hilt.navigation.compose.hiltViewModel
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
-import com.metawebthree.keykeeper.ui.components.LoadingProcess
-import com.metawebthree.keykeeper.ui.components.MeridiemButton
-import com.metawebthree.keykeeper.ui.components.TimeShower
-import com.metawebthree.keykeeper.ui.components.TimeShowerOptions
-import com.metawebthree.keykeeper.ui.screen.tabbar.TabBarIntent
-import com.metawebthree.keykeeper.ui.screen.tabbar.TabBarModel
+import com.metawebthree.app.ui.components.LoadingProcess
+import com.metawebthree.app.ui.components.MeridiemButton
+import com.metawebthree.app.ui.components.TimeShower
+import com.metawebthree.app.ui.components.TimeShowerOptions
+import com.metawebthree.app.ui.screen.tabbar.TabBarIntent
+import com.metawebthree.app.ui.screen.tabbar.TabBarModel
 import kotlinx.coroutines.delay
 
 @SuppressLint("ContextCastToActivity")

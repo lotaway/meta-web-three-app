@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.screen.tabbar.product
+package com.metawebthree.app.ui.screen.tabbar.product
 
 data class UIState(
     var loading: Boolean = false,

@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.components
+package com.metawebthree.app.ui.components
 
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.shape.RoundedCornerShape
@@ -11,7 +11,7 @@ import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.Dp
 import androidx.compose.ui.unit.dp
-import com.metawebthree.keykeeper.ui.screen.tabbar.product.MeridiemType
+import com.metawebthree.app.ui.screen.tabbar.product.MeridiemType
 
 @Composable
 fun MeridiemButton(

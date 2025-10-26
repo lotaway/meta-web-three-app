@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.config;
+package com.metawebthree.app.config;
 
 object ApplicationRoute {
     const val START_PAGE = "startPage"

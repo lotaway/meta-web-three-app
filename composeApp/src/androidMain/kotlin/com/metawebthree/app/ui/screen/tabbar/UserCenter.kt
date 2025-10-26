@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.screen.tabbar
+package com.metawebthree.app.ui.screen.tabbar
 
 import android.content.Context
 import androidx.compose.foundation.layout.Column
@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.lifecycle.viewmodel.compose.viewModel
 import androidx.navigation.NavHostController
 import coil.compose.AsyncImage
-import com.metawebthree.keykeeper.config.ApplicationRoute
-import com.metawebthree.keykeeper.model.ImageMediaModel
+import com.metawebthree.app.config.ApplicationRoute
+import com.metawebthree.app.model.ImageMediaModel
 
 @Composable
 fun UserCenter(context: Context, appNavCtrl: NavHostController) {

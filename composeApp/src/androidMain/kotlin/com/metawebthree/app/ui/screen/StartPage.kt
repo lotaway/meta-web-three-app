@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.screen
+package com.metawebthree.app.ui.screen
 
 import androidx.compose.animation.AnimatedVisibility
 import androidx.compose.animation.ExperimentalAnimationApi
@@ -20,6 +20,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.LaunchedEffect
 import androidx.compose.runtime.getValue
+import androidx.compose.runtime.mutableFloatStateOf
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.remember
 import androidx.compose.runtime.setValue
@@ -33,8 +34,8 @@ import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import androidx.navigation.compose.rememberNavController
-import com.metawebthree.keykeeper.config.ApplicationRoute
-import com.metawebthree.keykeeper.ui.theme.DefaultTheme
+import com.metawebthree.app.config.ApplicationRoute
+import com.metawebthree.app.ui.theme.DefaultTheme
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
 
@@ -45,7 +46,7 @@ fun StartPage(navController: NavHostController) {
     val circleColor = MaterialTheme.colorScheme.onPrimaryContainer
     val lineColor = MaterialTheme.colorScheme.primaryContainer
     var lineAlpha by remember {
-        mutableStateOf(0f)
+        mutableFloatStateOf(0f)
     }
     val animatable = remember {
         Animatable(0f)

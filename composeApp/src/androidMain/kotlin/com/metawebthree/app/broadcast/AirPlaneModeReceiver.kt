@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.broadcast
+package com.metawebthree.app.broadcast
 
 import android.content.BroadcastReceiver
 import android.content.Context
@@ -6,7 +6,6 @@ import android.content.Intent
 import android.content.IntentFilter
 import android.os.IBinder
 import android.provider.Settings
-import com.metawebthree.app.broadcast.WatcherForActivity
 
 class AirPlaneModeReceiver : BroadcastReceiver(),
     WatcherForActivity {

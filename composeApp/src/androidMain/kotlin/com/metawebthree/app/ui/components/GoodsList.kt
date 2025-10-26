@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.components
+package com.metawebthree.app.ui.components
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.lazy.LazyColumn

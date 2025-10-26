@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.screen.tabbar
+package com.metawebthree.app.ui.screen.tabbar
 
 import android.content.Context
 import android.content.res.Configuration.ORIENTATION_LANDSCAPE
@@ -40,8 +40,8 @@ import androidx.navigation.NavHostController
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.compose.rememberNavController
-import com.metawebthree.keykeeper.config.TabBarRoute
-import com.metawebthree.keykeeper.ui.screen.tabbar.product.ProductsView
+import com.metawebthree.app.config.TabBarRoute
+import com.metawebthree.app.ui.screen.tabbar.product.ProductsView
 import metawebthreeapp.composeapp.generated.resources.Res
 import metawebthreeapp.composeapp.generated.resources.home
 import metawebthreeapp.composeapp.generated.resources.category

@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.model
+package com.metawebthree.app.model
 
 import android.app.Application
 import dagger.hilt.android.HiltAndroidApp

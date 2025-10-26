@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.ui.theme
+package com.metawebthree.app.ui.theme
 
 import androidx.compose.material3.Typography
 import androidx.compose.ui.text.TextStyle

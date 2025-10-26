@@ -1,4 +1,4 @@
-package com.metawebthree.keykeeper.utils
+package com.metawebthree.app.utils
 
 import android.content.ContentUris
 import android.content.Context
